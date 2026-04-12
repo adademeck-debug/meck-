@@ -4,6 +4,7 @@ import OpenAI from "openai";
 export async function POST(req) {
   try {
 
+    // Create clients inside the function
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
       process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -20,7 +21,7 @@ export async function POST(req) {
       { role: "user", content: message },
     ]);
 
-    // AI RESPONSE
+    // AI response
     const ai = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
