@@ -39,7 +39,7 @@ export default function ChatWidget() {
 
   useEffect(() => {
     fetchMessages();
-    const interval = setInterval(fetchMessages, 2000);
+    const interval = setInterval(fetchMessages, 5000);
     return () => clearInterval(interval);
   }, [open]);
 
@@ -61,19 +61,72 @@ export default function ChatWidget() {
 
   // Send message
   const sendMessage = async () => {
-    if (!input.trim()) return;
-    setLoading(true);
+  if (!input.trim()) return;
 
-    await fetch("/api/chat", {
+  const userMessage = input;
+
+  // ✅ instantly show user message (better UX)
+  setMessages((prev) => [
+    ...prev,
+    { role: "user", content: userMessage },
+  ]);
+
+  setInput("");
+  setLoading(true);
+
+  try {
+    const res = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: input }),
+      body: JSON.stringify({ message: userMessage }),
     });
 
-    setInput("");
-    setLoading(false);
-    fetchMessages();
-  };
+    const data = await res.json();
+
+    // ✅ Handle API failure
+    if (!res.ok) {
+      console.error("API Error:", data);
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "ai",
+          content:
+            data.reply ||
+            "Sorry, something went wrong. Please contact us on WhatsApp.",
+        },
+      ]);
+    } else {
+      // ✅ Normal success
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "ai",
+          content:
+            data.reply ||
+            "Thanks! Please contact us on WhatsApp for a quick response.",
+        },
+      ]);
+    }
+  } catch (err) {
+    console.error("Network Error:", err);
+
+    // ✅ Total failure fallback
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "ai",
+        content:
+          "Connection issue. Please contact us via WhatsApp for a quick quote.",
+      },
+    ]);
+  }
+
+  setLoading(false);
+
+  // Optional: still sync with DB
+  fetchMessages();
+};
 
   // Toggle chat open/close
   const toggleChat = () => {

@@ -4,8 +4,8 @@ import OpenAI from "openai";
 
 export async function POST(req) {
   try {
+    const { message } = await req.json();
 
-    // Create clients inside the function
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
       process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -15,40 +15,60 @@ export async function POST(req) {
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    const { message } = await req.json();
-
-    // Save USER message
+    // Save user message
     await supabase.from("messages").insert([
       { role: "user", content: message },
     ]);
 
-    // AI response
-    const ai = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: `
+    let reply = "";
+
+    try {
+      // ✅ Try OpenAI
+      const ai = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: `
 You are a professional assistant for Green Line Facilities.
 Be friendly, short, and helpful.
 Encourage users to request a quote or contact via WhatsApp.
-          `,
-        },
-        { role: "user", content: message },
-      ],
-    });
+            `,
+          },
+          { role: "user", content: message },
+        ],
+      });
 
-    const reply = ai.choices[0].message.content;
+      reply = ai.choices[0].message.content;
 
-    // Save AI message
+    } catch (err) {
+      console.error("OpenAI Error:", err.message);
+
+      // ✅ Fallback if OpenAI fails
+      reply =
+        "Thanks for your message! Please contact us on WhatsApp for a quick quote.";
+    }
+
+    // Save AI reply
     await supabase.from("messages").insert([
       { role: "ai", content: reply },
     ]);
 
-    return Response.json({ success: true });
+    return Response.json({
+      success: true,
+      reply,
+    });
 
   } catch (err) {
-    console.error(err);
-    return Response.json({ error: err.message }, { status: 500 });
+    console.error("Server Error:", err.message);
+
+    return Response.json(
+      {
+        success: false,
+        reply:
+          "Something went wrong. Please contact us on WhatsApp for assistance.",
+      },
+      { status: 500 }
+    );
   }
 }
