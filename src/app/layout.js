@@ -10,10 +10,10 @@ export const metadata = {
   title: "Green Line Facilities",
   description: "Professional Cleaning Services",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.ico?v=2",
+    apple: "/apple-touch-icon.png?v=2",
 
-  }
+  },
 };
 
 export default function RootLayout({ children }) {
