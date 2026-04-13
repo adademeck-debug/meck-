@@ -40,8 +40,8 @@ export async function POST(req) {
     // ✅ EMAIL 1: ADMIN (YOU)
     // =========================
     await resend.emails.send({
-      from: "Green Line <onboarding@resend.dev>",
-      to: "info@greenlinefaciliities.co.uk",
+      from: "Green Line <info@greenlinefacilities.co.uk>",
+      to: "info@greenlinefacilities.co.uk",
       subject: "🚨 New Cleaning Booking",
       html: `
         <h2>New Booking Received</h2>
@@ -59,7 +59,7 @@ export async function POST(req) {
     // ✅ EMAIL 2: CLIENT (NEW 🔥)
     // =========================
     await resend.emails.send({
-      from: "Green Line Facilities <onboarding@resend.dev>",
+      from: "Green Line Facilities <info@greenlinefacilities.co.uk>",
       to: payload.email,
       subject: "✅ Your Quote Request Received",
       html: `
