@@ -42,6 +42,7 @@ export async function POST(req) {
     await resend.emails.send({
       from: "Green Line <info@greenlinefacilities.co.uk>",
       to: "info@greenlinefacilities.co.uk",
+      reply_to: payload.email,
       subject: "🚨 New Cleaning Booking",
       html: `
         <h2>New Booking Received</h2>
