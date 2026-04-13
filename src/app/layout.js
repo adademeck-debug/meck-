@@ -13,7 +13,7 @@ export const metadata = {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
 
-  },
+  }
 };
 
 export default function RootLayout({ children }) {
