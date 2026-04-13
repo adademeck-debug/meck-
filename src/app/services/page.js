@@ -197,10 +197,10 @@ We work with residential clients, commercial businesses, property managers, and 
 Green Line Facilities Limited Cleaning & Facilities Management
 </p>
 <p className="mb-6">
-Email: greenlinefacilities@gmail.com
+Email: info@greenlinefaciliities.co.uk
 </p>
 <p className="mb-6">
-Phone: +44 
+Phone: +44 7344 294706
         </p>
 
         <Link href="/contact">

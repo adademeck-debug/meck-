@@ -9,6 +9,11 @@ import SocialLinks from "../components/SocialLinks";
 export const metadata = {
   title: "Green Line Facilities",
   description: "Professional Cleaning Services",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+
+  },
 };
 
 export default function RootLayout({ children }) {
