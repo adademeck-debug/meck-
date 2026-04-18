@@ -10,7 +10,7 @@ export const metadata = {
   title: "Green Line Facilities",
   description: "Professional Cleaning Services",
   verification: {
-    google: "9nnU_JsPGPwlYAxe5-zIz6uV3JFtXPO2qnLnDZTu_Xs"
+    google: "2KA3W8C7_OHMuBI1IupZB9iYR_0Ta1c5KkVLPifBiNw" 
   },
   icons: {
     icon: "/favicon.ico?v=2",
