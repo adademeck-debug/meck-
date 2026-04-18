@@ -9,6 +9,9 @@ import SocialLinks from "../components/SocialLinks";
 export const metadata = {
   title: "Green Line Facilities",
   description: "Professional Cleaning Services",
+  verification: {
+    google: "9nnU_JsPGPwlYAxe5-zIz6uV3JFtXPO2qnLnDZTu_Xs"
+  },
   icons: {
     icon: "/favicon.ico?v=2",
     apple: "/apple-touch-icon.png?v=2",
@@ -27,7 +30,7 @@ export default function RootLayout({ children }) {
 
         <Footer />
         <FloatingCTA />
-        <hatsAppButton/>
+        <whatsAppButton/>
         <ChatWidget />
         <SocialLinks />
 
